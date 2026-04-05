@@ -1,0 +1,157 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+enum SubjectType {
+    Republic
+    Territories
+    Regions
+    AutonomousRegion
+    AutonomousTerritories
+}
+
+enum RoadType {
+    Alley
+    Boulevard
+    Highway
+    Lane
+    Square
+    Drive
+    Avenue
+    Byway
+    Crossing
+    Descent
+    Tract
+    CulDeSac
+    Street
+    Motorway
+}
+
+enum BuildingType {
+    House
+    Block
+    Structure
+    Shaft
+}
+
+enum PremiseType {
+    Apartment
+    Room
+    Office
+    Pavilion
+    Premise
+    WorkArea
+    Warehouse
+    SalesFloor
+    Workshop
+}
+
+enum ParkingSpaceType {
+    ParkingSpace
+    Garage
+    GarageBox
+}
+
+enum LandParcelType {
+    LandPlot
+    GardenPlot
+    AgriculturalPlot
+    ForestPlot
+    WaterPlot
+    SpeciallyProtectedPlot
+    IndustrialPlot
+}
+
+enum AddressObjectType {
+    Building
+    LandParcel
+    ParkingSpace
+    Premise
+    Structure
+}
+
+abstract class ValueObject<T> {
+    # Type: T
+    # Value: String
+    + {abstract} ToString(): String
+}
+
+class SubjectInfo {
+    + ToString(): String
+}
+
+class RoadInfo {
+    + ToString(): String
+}
+
+class BuildingInfo {
+    + ToString(): String
+}
+
+class PremiseInfo {
+    + ToString(): String
+}
+
+class ParkingSpaceInfo {
+    + ToString(): String
+}
+
+class LandParcelInfo {
+    + ToString(): String
+}
+
+class Address {
+    + Country: String
+    + Subject: SubjectInfo?
+    + MunicipalDistrict: String?
+    + Settlement: String?
+    + Locality: String?
+    + PlanningStructure: String?
+    + RoadNetwork: RoadInfo?
+    + AddressObjectType: AddressObjectType?
+    + Building: BuildingInfo?
+    + LandParcel: LandParcelInfo?
+    + Premise: PremiseInfo?
+    + ParkingSpace: ParkingSpaceInfo?
+    + GenerateFullAddress(): String
+}
+
+class AddressBuilder {
+    - _address: Address
+    + SetCountry(String): AddressBuilder
+    + SetSubject(SubjectType, String): AddressBuilder
+    + SetMunicipalDistrict(String): AddressBuilder
+    + SetSettlement(String): AddressBuilder
+    + SetLocality(String): AddressBuilder
+    + SetPlanningStructure(String): AddressBuilder
+    + SetRoad(RoadType, String): AddressBuilder
+    + SetBuilding(BuildingType, String): AddressBuilder
+    + SetLandParcel(LandParcelType, String): AddressBuilder
+    + SetParkingSpace(ParkingSpaceType, String): AddressBuilder
+    + SetPremise(PremiseType, String): AddressBuilder
+    + Build(): String
+}
+
+ValueObject <|-- SubjectInfo
+ValueObject <|-- RoadInfo
+ValueObject <|-- BuildingInfo
+ValueObject <|-- PremiseInfo
+ValueObject <|-- ParkingSpaceInfo
+ValueObject <|-- LandParcelInfo
+
+SubjectInfo --> SubjectType
+RoadInfo --> RoadType
+BuildingInfo --> BuildingType
+PremiseInfo --> PremiseType
+ParkingSpaceInfo --> ParkingSpaceType
+LandParcelInfo --> LandParcelType
+
+AddressBuilder --> Address : creates
+Address --> SubjectInfo
+Address --> RoadInfo
+Address --> BuildingInfo
+Address --> LandParcelInfo
+Address --> PremiseInfo
+Address --> ParkingSpaceInfo
+Address --> AddressObjectType
+
+@enduml
